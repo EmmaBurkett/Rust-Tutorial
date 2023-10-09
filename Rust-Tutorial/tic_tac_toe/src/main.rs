@@ -1,29 +1,28 @@
-use std::io;
 struct Game {
     game_board: Vec<i32>,
-    &mut exes: i32,
-    &mut ohs: i32,
-    &mut player_turn: i32
+    exes: &i32,
+    ohs: &i32,
+    player_turn: &mut i32
  }
  
  impl Game {
     fn initialize_game(
         game_board: Vec<i32>,
-        &mut exes: i32,
-        &mut ohs: i32, 
-        &mut player_turn: i32
+        exes: &i32,
+        ohs: &i32, 
+        player_turn: &mut i32
     ) -> Game {
        Game {
-          game_board: Vec<i32>,
-          &mut exes: i32,
-          &mut ohs: i32,
-          &mut player_turn: i32
+          game_board,
+          exes,
+          ohs,
+          player_turn
        }
     }
  
     fn run_program(&mut self) {
         // keep track of game end
-        let game_over = 0;
+        let game_over = false;
 
         // Get user's next move
         let user_input = 0;
@@ -32,7 +31,7 @@ struct Game {
         self.display_rules();
 
         // Contine game until someone's won
-        while !game_over {
+        while !(game_over) {
 
             // Display board with xo
             self.display_board();
@@ -64,8 +63,8 @@ struct Game {
     fn update_vector(&self,user_input: i32) {
 
     }
-    fn check_winner(&self) ->i32 {
-        return 1;
+    fn check_winner(&self) ->bool {
+        return false;
     }
     fn display_winner(&self) {
 
@@ -74,15 +73,15 @@ struct Game {
  
  fn main() {
     //Define ALL your variables here
-    let game_board = Vec<i32>;
-    let mut exes = 1;
-    let mut ohs = 0;
+    let game_board = vec![0; 9];
+    let exes = 1;
+    let ohs = 0;
     let mut player_turn = 0;
     
     let mut game = Game::initialize_game(
         game_board,
-        &mut exes,
-        &mut ohs,
+        &exes,
+        &ohs,
         &mut player_turn
     );
  
