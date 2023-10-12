@@ -5,7 +5,11 @@ struct Text {
 impl Text {
     pub fn initialize_text(name: String, message: String) -> Text {
         Text {name, message}
+    pub fn initialize_text(name: String, message: String) -> Text {
+        Text {name, message}
    }
+   pub fn print_text(&self) {
+        println!("{} There is a message for you:\n{}", self.name, self.message);
    pub fn print_text(&self) {
         println!("{} There is a message for you:\n{}", self.name, self.message);
    }
