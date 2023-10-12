@@ -1,10 +1,11 @@
 use std::io;
 use std::io::Write;
+
 struct Game<'a> {
-    game_board: Vec<String>,
-    exes: &'a String,
-    ohs: &'a String,
-    player_turn: &'a mut i32
+    game_board: Vec<char>,
+    exes: &'a char,
+    ohs: &'a char,
+    turn_number: &'a mut i32
  }
  
  impl<'a> Game<'a> {
@@ -12,17 +13,17 @@ struct Game<'a> {
         game_board: Vec<String>,
         exes: &'a String,
         ohs: &'a String, 
-        player_turn: &'a mut i32
+        turn_number: &'a mut i32
     ) -> Game<'a> {
        Game {
-          game_board,
+          vec![" "; 3*3];,
           exes,
           ohs,
-          player_turn
+          turn_number
        }
     }
  
-    fn run_program(&mut self) {
+    fn play(&mut self) {
         // keep track of game end
         let mut game_over = false;
 
@@ -42,10 +43,10 @@ struct Game<'a> {
             user_input = self.get_input();
 
             // Update vector with correct sign
-            self.update_vector(user_input);
+            self.update_board(user_input);
 
-            // Check for cat game or winner
-            game_over = self.check_winner();
+            // Check for winner
+            game_over = self.has_won();
         }
 
         // Display who won
@@ -134,9 +135,9 @@ struct Game<'a> {
         return number_input;
     }
 
-    fn update_vector(&mut self, user_input: i32) {
+    fn update_board(&mut self, user_input: i32) {
         // Find out whose turn it is and deliver an x or an o
-        if *self.player_turn % 2 == 0{
+        if *self.turn_number % 2 == 0{
             
             // Vectors take their slicing in terms of usize
             self.game_board[user_input as usize] = (*self.ohs).clone();
@@ -152,12 +153,12 @@ struct Game<'a> {
             self.game_board[user_input as usize] = (*self.exes).clone();
         }
 
-        // Dereference self.player_turn to add 1 to it
+        // Dereference self.turn_number to add 1 to it
         // Dereference the storage place as well; you're not replacing the address
-        *self.player_turn = *self.player_turn + 1;
+        *self.turn_number = *self.turn_number + 1;
     }
 
-    fn check_winner(&self) ->bool {
+    fn has_won(&self) ->bool {
         /*
           0 | 1 | 2 
          -----------
@@ -203,33 +204,36 @@ struct Game<'a> {
         return false;
     }
     fn display_winner(&self) {
-        println!("Player: {} won in {} moves", *self.player_turn % 2 - 1, self.player_turn)
+        println!("Player: {} won in {} moves", *self.turn_number % 2 - 1, self.turn_number)
     }
  }
  
  fn main() {
     //Define ALL your variables here
-    let game_board = vec![" ".to_string(); 9];
-    let exes = "X".to_string();
-    let ohs = "O".to_string();
-    let mut player_turn = 0;
+    let game_board = vec![" "; 3*3];
+    let player_one = 
+    let exes = "X";
+    let ohs = "O";
+    let mut turn_number: i32; 
     
     let mut game = Game::initialize_game(
         game_board,
         &exes,
         &ohs,
-        &mut player_turn
+        &mut turn_number
     );
  
-    game.run_program();
+    game.play();
  }
+ // Fix has_won
+ // Make is so no one can cheat 
  
  /* LifeTime Parameters 
  struct Game<'a> {
     game_board: Vec<i32>,
     exes: &'a i32,
     ohs: &'a i32,
-    player_turn: &'a mut i32
+    turn_number: &'a mut i32
  }
  
  impl<'a> Game<'a> {
@@ -237,13 +241,13 @@ struct Game<'a> {
         game_board: Vec<i32>,
         exes: &'a i32,
         ohs: &'a i32, 
-        player_turn: &'a mut i32
+        turn_number: &'a mut i32
     ) -> Game<'a> {
        Game {
           game_board,
           exes,
           ohs,
-          player_turn
+          turn_number
        }
     }
  
@@ -303,13 +307,13 @@ struct Game<'a> {
     let game_board = vec![0; 9];
     let exes = 1;
     let ohs = 0;
-    let mut player_turn = 0;
+    let mut turn_number = 0;
     
     let mut game = Game::initialize_game(
         game_board,
         &exes,
         &ohs,
-        &mut player_turn
+        &mut turn_number
     );
  
     game.run_program();
