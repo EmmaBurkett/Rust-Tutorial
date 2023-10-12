@@ -63,20 +63,13 @@ struct Game<'a> {
         */
 
         // Iterate 0 through 8 for(int x = 0; x < 9; x++)
-        for x in 0..9 {
-            // Create row dividers
-            if x == 2 || x == 5{
-                print!(" {} ", x);
-                println!("\n-----------");
-            }
-            // Don't create row divider on last digit
-            else if x == 8{
-                println!(" {} ", x);
-            }
-            // Create column divider
-            else {
-                print!(" {} |", x);
-            }
+        let b = self.game_board;
+        println!("
+         {} | {} | {} 
+        -----------
+         {} | {} | {} 
+        -----------
+         {} | {} | {} ", 0, 1, 2, 3, 4, 5, 6, 7, 8);
         }
         // Add space and print the final line
         println!("");
@@ -96,20 +89,12 @@ struct Game<'a> {
         // Iterate through game_board
         for x in &self.game_board {
             // Create row dividers
-            if index == 2 || index == 5{
-                print!(" {} ", x);
-                println!("\n-----------");
-            }
-            // Don't create row divider on last digit
-            else if index == 8{
-                println!(" {} ", x);
-            }
-            // Create column divider
-            else {
-               
-                print!(" {} |", x);
-            }
-            index += 1;
+        println!("
+         {} | {} | {} 
+        -----------
+         {} | {} | {} 
+        -----------
+         {} | {} | {} ", b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7], b[8]);
         }
         // Add newline and print the final line
         println!("");
